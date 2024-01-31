@@ -29,7 +29,6 @@ final class DsnTest extends TestCase
         $this->assertSame($expectedScheme, $dsn->getScheme());
         $this->assertSame($expectedHost, $dsn->getHost());
         $this->assertSame($expectedPort, $dsn->getPort());
-        $this->assertSame($expectedPublicKey, $dsn->getPublicKey());
         $this->assertSame($expectedProjectId, $dsn->getProjectId(true));
         $this->assertSame($expectedPath, $dsn->getPath());
     }

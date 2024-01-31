@@ -169,10 +169,6 @@ final class DynamicSamplingContext
         if ($client !== null) {
             $options = $client->getOptions();
 
-            if ($options->getDsn() !== null && $options->getDsn()->getPublicKey() !== null) {
-                $samplingContext->set('public_key', $options->getDsn()->getPublicKey());
-            }
-
             if ($options->getRelease() !== null) {
                 $samplingContext->set('release', $options->getRelease());
             }
@@ -198,10 +194,6 @@ final class DynamicSamplingContext
 
         if ($options->getTracesSampleRate() !== null) {
             $samplingContext->set('sample_rate', (string) $options->getTracesSampleRate());
-        }
-
-        if ($options->getDsn() !== null && $options->getDsn()->getPublicKey() !== null) {
-            $samplingContext->set('public_key', $options->getDsn()->getPublicKey());
         }
 
         if ($options->getRelease() !== null) {

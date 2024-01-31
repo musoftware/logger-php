@@ -20,7 +20,6 @@ final class Http
         $authHeader = [
             'sentry_version=' . Client::PROTOCOL_VERSION,
             'sentry_client=' . $sdkIdentifier . '/' . $sdkVersion,
-            'sentry_key=' . $dsn->getPublicKey(),
         ];
 
         return [

@@ -27,10 +27,6 @@ final class Dsn implements \Stringable
      */
     private $port;
 
-    /**
-     * @var string The public key to authenticate the SDK
-     */
-    private $publicKey;
 
     /**
      * @var string The ID of the resource to access
@@ -50,14 +46,12 @@ final class Dsn implements \Stringable
      * @param int    $port      The port on which the resource is exposed
      * @param string $projectId The ID of the resource to access
      * @param string $path      The specific resource that the web client wants to access
-     * @param string $publicKey The public key to authenticate the SDK
      */
-    private function __construct(string $scheme, string $host, int $port, string $projectId, string $path, string $publicKey)
+    private function __construct(string $scheme, string $host, int $port, string $projectId, string $path)
     {
         $this->scheme = $scheme;
         $this->host = $host;
         $this->port = $port;
-        $this->publicKey = $publicKey;
         $this->path = $path;
         $this->projectId = $projectId;
     }
@@ -70,7 +64,6 @@ final class Dsn implements \Stringable
     public static function createFromString(string $value): self
     {
         $parsedDsn = parse_url($value);
-
         if ($parsedDsn === false) {
             throw new \InvalidArgumentException(sprintf('The "%s" DSN is invalid.', $value));
         }
@@ -99,8 +92,7 @@ final class Dsn implements \Stringable
             $parsedDsn['host'],
             $parsedDsn['port'] ?? ($parsedDsn['scheme'] === 'http' ? 80 : 443),
             $projectId,
-            $path,
-            $parsedDsn['user']
+            $path
         );
     }
 
@@ -147,10 +139,7 @@ final class Dsn implements \Stringable
     /**
      * Gets the public key to authenticate the SDK.
      */
-    public function getPublicKey(): string
-    {
-        return $this->publicKey;
-    }
+
 
     /**
      * Returns the URL of the API for the envelope endpoint.
@@ -165,7 +154,7 @@ final class Dsn implements \Stringable
      */
     public function getCspReportEndpointUrl(): string
     {
-        return $this->getBaseEndpointUrl() . '/security/?sentry_key=' . $this->publicKey;
+        return $this->getBaseEndpointUrl() . '/security/';
     }
 
     /**
@@ -173,9 +162,9 @@ final class Dsn implements \Stringable
      */
     public function __toString(): string
     {
-        $url = $this->scheme . '://' . $this->publicKey;
+        $url = $this->scheme . '://';
 
-        $url .= '@' . $this->host;
+        $url .= $this->host;
 
         if (($this->scheme === 'http' && $this->port !== 80) || ($this->scheme === 'https' && $this->port !== 443)) {
             $url .= ':' . $this->port;
