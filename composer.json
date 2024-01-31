@@ -1,5 +1,5 @@
 {
-    "name": "sentry/sentry",
+    "name": "musoftware/logger-php",
     "type": "library",
     "description": "PHP SDK for Sentry (http://sentry.io)",
     "keywords": [
@@ -13,7 +13,6 @@
         "profiling",
         "tracing"
     ],
-    "homepage": "http://sentry.io",
     "license": "MIT",
     "authors": [
         {
