@@ -190,11 +190,12 @@ final class Dsn implements \Stringable
             $url .= ':' . $this->port;
         }
 
+        $url .= '/api';
         if ($this->path !== null) {
             $url .= $this->path;
         }
 
-        $url .= '/api/' . $this->projectId;
+        $url .= '/' . $this->projectId;
 
         return $url;
     }
