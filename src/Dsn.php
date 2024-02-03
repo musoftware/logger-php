@@ -146,7 +146,7 @@ final class Dsn implements \Stringable
      */
     public function getEnvelopeApiEndpointUrl(): string
     {
-        return $this->getBaseEndpointUrl() . '/envelope/';
+        return $this->getBaseEndpointUrl() . '/envelope';
     }
 
     /**
@@ -154,7 +154,7 @@ final class Dsn implements \Stringable
      */
     public function getCspReportEndpointUrl(): string
     {
-        return $this->getBaseEndpointUrl() . '/security/';
+        return $this->getBaseEndpointUrl() . '/security';
     }
 
     /**

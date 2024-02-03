@@ -48,14 +48,6 @@ class HttpClient implements HttpClientInterface
 
         $requestHeaders = Http::getRequestHeaders($dsn, $this->sdkIdentifier, $this->sdkVersion);
 
-        if (
-            \extension_loaded('zlib')
-            && $options->isHttpCompressionEnabled()
-        ) {
-            $requestData = gzcompress($requestData, -1, \ZLIB_ENCODING_GZIP);
-            $requestHeaders[] = 'Content-Encoding: gzip';
-        }
-
         $responseHeaders = [];
         $responseHeaderCallback = function ($curlHandle, $headerLine) use (&$responseHeaders): int {
             return Http::parseResponseHeaders($headerLine, $responseHeaders);
@@ -73,10 +65,7 @@ class HttpClient implements HttpClientInterface
         curl_setopt($curlHandle, \CURLOPT_HEADERFUNCTION, $responseHeaderCallback);
         curl_setopt($curlHandle, \CURLOPT_HTTP_VERSION, \CURL_HTTP_VERSION_1_1);
 
-        $httpSslVerifyPeer = $options->getHttpSslVerifyPeer();
-        if (!$httpSslVerifyPeer) {
-            curl_setopt($curlHandle, \CURLOPT_SSL_VERIFYPEER, false);
-        }
+        curl_setopt($curlHandle, \CURLOPT_SSL_VERIFYPEER, false);
 
         $httpProxy = $options->getHttpProxy();
         if ($httpProxy !== null) {
@@ -104,6 +93,7 @@ class HttpClient implements HttpClientInterface
         $statusCode = curl_getinfo($curlHandle, \CURLINFO_HTTP_CODE);
 
         curl_close($curlHandle);
+
 
         return new Response($statusCode, $responseHeaders, '');
     }
