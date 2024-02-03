@@ -26,9 +26,6 @@ class SpotlightClient
         $curlHandle = curl_init();
 
         curl_setopt($curlHandle, \CURLOPT_URL, $url);
-        curl_setopt($curlHandle, \CURLOPT_HTTPHEADER, [
-            'Content-Type: application/x-sentry-envelope',
-        ]);
         curl_setopt($curlHandle, \CURLOPT_TIMEOUT, 2.0);
         curl_setopt($curlHandle, \CURLOPT_CONNECTTIMEOUT, 1.0);
         curl_setopt($curlHandle, \CURLOPT_ENCODING, '');
