@@ -23,6 +23,7 @@ final class Http
         ];
 
         return [
+            'Content-Type: application/x-ndjson',
             'X-Sentry-Auth: Sentry ' . implode(', ', $authHeader),
         ];
     }
